@@ -1,4 +1,4 @@
-name: My First CI Pipeline
+name: Run Sript Pipline
 
 on: [push]
 
@@ -10,14 +10,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Show current directory
-        run: pwd
-
-      - name: List files
-        run: ls -la
-
-      - name: Show date
-        run: date
-
-      - name: Show system info
-        run: uname -a
+      - name: Run coutom script
+        run: ./script.sh
