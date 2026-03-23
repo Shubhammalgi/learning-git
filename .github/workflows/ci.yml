@@ -1,19 +1,26 @@
-name: Artifact Pipeline
+name: Full CI/CD Pipeline
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create file
-        run: echo "Hello from build job" > app.txt
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run build script
+        run: ./app.sh
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: my-file
+          name: app-file
           path: app.txt
 
   test:
@@ -24,15 +31,18 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: my-file
+          name: app-file
 
-      - name: Show file content
+      - name: Verify file
         run: cat app.txt
+
+      - name: Check content
+        run: grep "Version 1.0" app.txt
 
   deploy:
     runs-on: ubuntu-latest
     needs: test
 
     steps:
-      - name: Deploy step
-        run: echo "Deploying application..."
+      - name: Deploy simulation
+        run: echo "🚀 Deploying Application to Production..."
