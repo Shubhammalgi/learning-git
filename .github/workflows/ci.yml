@@ -1,4 +1,4 @@
-name: Run Sript Pipline
+name: Multi job pipeline
 
 on: [push]
 
@@ -7,8 +7,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Build steps
+        run: check "building application..."
 
-      - name: Run coutom script
-        run: ./script.sh
+  test:
+     runs-on: ubuntu-latest
+   steps:
+     - name: test step
+       run:   echo "running test...."
+  deploy:
+     runs-on: ubuntu-latest
+  steps:
+     -name: deploy steps
+      run: echo "Deploying application"
