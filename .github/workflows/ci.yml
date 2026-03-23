@@ -1,22 +1,25 @@
-name: Multi job pipeline
+name: Multi Job Pipeline
 
-on: [push]
+on: push
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build steps
-        run: check "building application..."
+      - name: Build step
+        run: echo "Building application..."
 
   test:
-     runs-on: ubuntu-latest
-   steps:
-     - name: test step
-       run:   echo "running test...."
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test step
+        run: echo "Running tests..."
+
   deploy:
-     runs-on: ubuntu-latest
-  steps:
-     -name: deploy steps
-      run: echo "Deploying application"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy step
+        run: echo "Deploying application..."
