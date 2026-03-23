@@ -1,4 +1,4 @@
-name: Multi Job Pipeline
+name: Artifact Pipeline
 
 on: push
 
@@ -7,18 +7,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build step
-        run: echo "Building application..."
+      - name: Create file
+        run: echo "Hello from build job" > app.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-file
+          path: app.txt
 
   test:
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
-      - name: Test step
-        run: echo "Running tests..."
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: my-file
+
+      - name: Show file content
+        run: cat app.txt
 
   deploy:
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: Deploy step
